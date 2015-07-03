@@ -6,11 +6,15 @@ export default class Home extends React.Component {
 
   render() {
 
+
+
     return <div>
       <h3>Welcome</h3>
       <p>Ipsum loerm ...</p>
 
-      <Link to="register">What do you have or need?</Link>
+      <div><Link to="register">What do you have or need?</Link></div>
+      
+
 
     </div>;
   }

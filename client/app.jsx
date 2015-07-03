@@ -28,6 +28,9 @@ class App extends React.Component {
     if (user == null)
       return null;
 
+    var username = user.name || 'stranger';
+    var logout = user.name ? <a href="#">Logout</a> : null;
+
     return (
       <div>
         <nav className="navbar navbar-default">
@@ -37,6 +40,10 @@ class App extends React.Component {
                 Community Response (Don't Panic)
               </a>
             </div>
+            <ul className="nav navbar-nav navbar-right">
+              <li>{logout}</li>
+            </ul>
+            
           </div>
         </nav>
 

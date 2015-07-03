@@ -7,6 +7,8 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
 
+    this.mapNode = null;
+
     this.state = {
       users: null
     };
@@ -22,10 +24,29 @@ export default class Map extends React.Component {
     this.usersRef.off();
   }
 
+  showMap() {
+    if (this.map == null) {
+      setTimeout(() => {
+        this.mapNode = React.findDOMNode(this.refs.map);
+        console.log('hola', this.mapNode);
+
+        var mapOptions = {
+                  center: { lat: -39.927369, lng: 175.0414431},
+                  zoom: 14
+        };
+        var map = new google.maps.Map(this.mapNode, mapOptions);
+
+
+      }.bind(this), 100);
+    }
+  }
+
   render() {
     var users = this.state.users;
     if (users==null)
         return null;
+
+    this.showMap()
 
     var rows = [];
     for (var userId in users) {
@@ -45,6 +66,8 @@ export default class Map extends React.Component {
     return (
       <div>
         <h3>Map</h3>
+
+        <div id="map-canvas" ref="map">zz</div>
 
         <table className="table">
           <tr>
