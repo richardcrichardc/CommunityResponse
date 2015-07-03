@@ -1,8 +1,10 @@
 import React from 'react';
-import { Route, DefaultRoute, RouteHandler, Link, default as Router } from 'react-router';
+import { Route, DefaultRoute, RouteHandler, Navigation, default as Router } from 'react-router';
 import { rooms, logs } from './base';
 
-export default class Room extends React.Component {
+export default class Register extends React.Component {
+
+  mixins: [Navigation]
 
   constructor(props) {
     super(props);
@@ -16,8 +18,8 @@ export default class Room extends React.Component {
   }
 
   back(event) {
-    console.log('back');
-    this.context.router.transitionTo('room');
+    console.log('back', this.context.router);
+    this.context.router.transitionTo('home');
   }
 
 
@@ -111,3 +113,6 @@ export default class Room extends React.Component {
 
 }
 
+Register.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
