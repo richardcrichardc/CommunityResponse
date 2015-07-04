@@ -11,7 +11,8 @@ export default class Map extends React.Component {
     this.map = null;
 
     this.state = {
-      users: []
+      users: [],
+      sel: null
     };
 
     this.usersRef = root.child('users');
@@ -38,35 +39,39 @@ export default class Map extends React.Component {
         this.usersRef.on('child_added', function(snapshot) {
           var user = snapshot.val();
           user.key = snapshot.key();
-          
-          var users = this.state.users; 
+
+          var users = this.state.users;
           users.push(user);
           this.setState({'users': users});
           if (user.loc) {
-            this.addMark(user.loc, user.name + ': ' + user.address_no + ' ' + user.address_name);
-            
+            this.addMark(user);
+
             // Make noise
             React.findDOMNode(this.refs.ping).play();
           }
-        }.bind(this));     
+        }.bind(this));
 
       }.bind(this), 100);
     }
   }
 
-  addMark(loc, title) {
+  addMark(user) {
 
     var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(loc.lat, loc.lon),
-      title: title
+      position: new google.maps.LatLng(user.loc.lat, user.loc.lon),
+      title: user.name + ': ' + user.address_no + ' ' + user.address_name
     });
 
     marker.setMap(this.map);
+
+    google.maps.event.addListener(marker, 'click', () => {
+      this.setState({'sel', user});
+    });
   }
 
   render() {
     var users = this.state.users;
-
+    var sel = this.state.sel;
     this.showMap()
 
     var rows = [];
@@ -85,33 +90,51 @@ export default class Map extends React.Component {
       )
     }
 
+    var userPane = null;
+    if (sel) {
+      userPane = (
+        <div>{ sel.name }</div>
+        );
+    }
+
+
 
     return (
       <div>
         <h3>Management Console</h3>
 
-        <audio src="ping.mp3" autobuffer="autobuffer" ref="ping" />
-        
-        <div id="map-canvas" ref="map">zz</div>
+        <div className="row">
+          <div className="col-md-8">
+            <div id="map-canvas" ref="map"></div>
+            <audio src="ping.mp3" autobuffer="autobuffer" ref="ping" />
+          </div>
+          <div className="col-md-4">
+            { userPane }
+          </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Created</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Adults</th>
-              <th>Children</th>
-              <th>Address</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+        </div>
 
+        <div className="row">
+          <div className="col-md-12">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Created</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Adults</th>
+                  <th>Children</th>
+                  <th>Address</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }
