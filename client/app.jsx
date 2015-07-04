@@ -45,7 +45,7 @@ class App extends React.Component {
           <div className="container">
             <div className="navbar-header">
               <a className="navbar-brand" href="#">
-                Community Response (Dont Panic)
+                Community Response (Don&apos;t Panic)
               </a>
             </div>
             <ul className="nav navbar-nav navbar-right">

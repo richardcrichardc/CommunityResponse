@@ -18,7 +18,6 @@ export default class Needs extends React.Component {
   }
 
   back(event) {
-    console.log('back', this.context.router);
     this.context.router.transitionTo('home');
   }
 

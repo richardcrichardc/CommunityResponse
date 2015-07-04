@@ -77,7 +77,8 @@ export default class Map extends React.Component {
           <td>{user.adults}</td>
           <td>{user.children}</td>
           <td>{user.address_no} {user.address_name}</td>
-          <td>{user.loc}</td>
+          <td>{user.loc ? user.loc.lat : ''}</td>
+          <td>{user.loc ? user.loc.lon : ''}</td>
         </tr>
       )
     }
@@ -92,11 +93,14 @@ export default class Map extends React.Component {
         <table className="table">
           <thead>
             <tr>
+              <th>Created</th>
               <th>Name</th>
               <th>Phone</th>
               <th>Adults</th>
               <th>Children</th>
               <th>Address</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
             </tr>
           </thead>
           <tbody>

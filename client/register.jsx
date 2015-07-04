@@ -18,7 +18,6 @@ export default class Register extends React.Component {
   }
 
   back(event) {
-    console.log('back', this.context.router);
     this.context.router.transitionTo('home');
   }
 
@@ -35,7 +34,7 @@ export default class Register extends React.Component {
     }
 
     
-    var key = user.address_no + '_' + user.address_name.substring(0, 6).toLowerCase();
+    var key = user.address_no + '_' + user.address_name.substring(0, 6).toLowerCase().trim().replace(' ','_');
     console.log('key', key);
     
     streets.child(key).once('value', function(snapshot) {
