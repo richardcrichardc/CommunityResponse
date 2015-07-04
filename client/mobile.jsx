@@ -39,6 +39,7 @@ export default class Mobile extends React.Component {
   			
   			// Only show people within 3km
   			if (distance > 3) {
+  				  console.log('dropped', distance, other);
   					return;
   			}
 
@@ -49,6 +50,7 @@ export default class Mobile extends React.Component {
   	// Sort others - closest first
   	others.sort((a, b) => { return a[1] - b[1]; });
 
+  	var even = true;
   	for (var otherIndex in others) {
 
   			var otherDistance = others[otherIndex];
@@ -100,15 +102,17 @@ export default class Mobile extends React.Component {
   			needs.pop();
 
   			otherElems.push(
-  				<div>
+  				<div className={even ? 'even' : 'odd'}>
   					<div className="pull-right"><span className="badge">{ friendlyDistance(distance) }</span></div>
-  					<h4>{other.name || 'anon'} <small>{other.phone}</small> </h4>
-  					<div>{other.address_no} {other.address_name}</div>
+  					<h4>{other.name || 'anon'} <small>Ph: {other.phone || '???'}</small> </h4>
+  					<div>Adults: {other.adults || 0 } Children:{other.children || 0 }</div>
+  					<div>{other.address_no} {other.address_name} ()</div>
   					{ haves.length ? <div>Have: {haves}</div> : null }
   					{ needs.length ? <div>Need: {needs}</div> : null }
-  					<hr/>
   				</div>
   			);
+
+  			even = !even;
   	}
 
     return <div>
@@ -118,7 +122,7 @@ export default class Mobile extends React.Component {
       <h2>{user.name} <small>{user.phone}</small></h2>
       <p>{user.address_no} {user.address_name}</p>
       
-      <h3>Nearby people</h3>
+      <h3>People nearby</h3>
 
       {otherElems}
 
