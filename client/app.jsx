@@ -75,6 +75,7 @@ class App extends React.Component {
 import Home from './home.jsx';
 import Register from './register.jsx';
 import Needs from './needs.jsx';
+import Haves from './haves.jsx';
 import Map from './map.jsx';
 
 var routes = (
@@ -82,6 +83,7 @@ var routes = (
     <DefaultRoute name="home" handler={Home}/>
     <Route name="register" path="register" handler={Register}/>
     <Route name="needs" path="needs" handler={Needs}/>
+    <Route name="haves" path="haves" handler={Haves}/>
     <Route name="map" path="map" handler={Map}/>
   </Route>
 );

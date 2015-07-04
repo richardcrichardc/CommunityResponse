@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, DefaultRoute, RouteHandler, Navigation, default as Router } from 'react-router';
 import { rooms, logs } from './base';
 
-export default class Needs extends React.Component {
+export default class Haves extends React.Component {
 
   constructor(props) {
     super(props);
@@ -11,9 +11,9 @@ export default class Needs extends React.Component {
   }
 
   handleChange(thingId, event) {
-    var needs = this.state.user.needs || {};
-    needs[thingId] = event.target.checked;
-    this.state.user.needs = needs;
+    var haves = this.state.user.haves || {};
+    haves[thingId] = event.target.checked;
+    this.state.user.haves = haves;
     this.setState({user: this.state.user});
   }
 
@@ -24,20 +24,20 @@ export default class Needs extends React.Component {
 
   submit(event) {
     this.props.userRef.set(this.state.user);
-    this.context.router.transitionTo('haves');
+    this.context.router.transitionTo('home');
   }
 
   render() {
 
     var user = this.state.user;
-    var userNeeds = user.needs || {};
+    var userHaves = user.haves || {};
     var things = [];
 
-    console.log('userNeeds', userNeeds);
+    console.log('userHaves', userHaves);
 
     for (var thingId in this.props.things) {
       var thingName = this.props.things[thingId];
-      var checked = userNeeds[thingId] || false;
+      var checked = userHaves[thingId] || false;
       things.push(
         <div className="checkbox" key={thingId}>
           <label>
@@ -50,7 +50,7 @@ export default class Needs extends React.Component {
 
     return (
       <div>
-        <h3>What do you need?</h3>
+        <h3>What do you have?</h3>
         <form>
         <div>{things}</div>
         </form>
@@ -71,6 +71,6 @@ export default class Needs extends React.Component {
 
 }
 
-Needs.contextTypes = {
+Haves.contextTypes = {
   router: React.PropTypes.func.isRequired
 };
