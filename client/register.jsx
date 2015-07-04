@@ -56,6 +56,7 @@ export default class Register extends React.Component {
 
     return (
       <div>
+        <div className="alert alert-info hidden-xs hidden-sm map-user-table" role="alert">Best viewed on a phone.</div>
         <h3>Register Location</h3>
         <form className="form-horizontal">
           <div className="form-group">

@@ -116,6 +116,8 @@ export default class Mobile extends React.Component {
   	}
 
     return <div>
+			<div className="alert alert-info hidden-xs hidden-sm map-user-table" role="alert">Best viewed on a phone.</div>
+
       <div className="pull-right">
       	<Link to="register" className="btn btn-default btn-xs">Edit</Link>
       </div>

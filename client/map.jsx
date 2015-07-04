@@ -81,14 +81,15 @@ export default class Map extends React.Component {
         <tr key={user.key}>
           <td>{user.name}</td>
           <td>{user.phone}</td>
-          <td>{user.adults}</td>
-          <td>{user.children}</td>
+          <td>{user.adults || 0}</td>
+          <td>{user.children || 0}</td>
           <td>{user.loc.address}</td>
           <td>{user.loc ? user.loc.lat : ''}</td>
           <td>{user.loc ? user.loc.lon : ''}</td>
         </tr>
       )
     }
+    rows.reverse()
 
     var userPane = null;
     if (sel) {
@@ -127,6 +128,8 @@ export default class Map extends React.Component {
     return (
       <div>
         <h3>Management Console</h3>
+
+        <div className="alert alert-info hidden-md hidden-lg" role="alert">Best viewed on a wide screen.</div>
 
         <div className="row">
           <div className="col-md-8">
