@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, DefaultRoute, RouteHandler, Navigation, default as Router } from 'react-router';
 import { streets } from './base';
+import { getStreetKey } from './misc.js';
 
 export default class Register extends React.Component {
 
