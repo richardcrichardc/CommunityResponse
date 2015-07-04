@@ -11,14 +11,11 @@ export default class Map extends React.Component {
     this.map = null;
 
     this.state = {
-      users: null
+      users: []
     };
 
     this.usersRef = root.child('users');
 
-    this.usersRef.on('value', function(snapshot) {
-      this.setState({'users': snapshot.val()});
-    }.bind(this));
   }
 
   componentWillUnmount() {
@@ -37,18 +34,18 @@ export default class Map extends React.Component {
         };
         this.map = new google.maps.Map(this.mapNode, mapOptions);
 
-        // Add all user's to map
-        for (var userId in this.state.users) {
-          var user = this.state.users[userId];
-          if (user.loc) {
-            this.addMark(user.loc, user.name);
-          }
-        }
-
         // Listen for new users and add when they arrive
         this.usersRef.off();
         this.usersRef.on('child_added', function(snapshot) {
-          console.log('hello', snapshot.val())
+          var user = snapshot.val();
+          user.key = snapshot.key();
+          
+          var users = this.state.users; 
+          users.push(user);
+          this.setState({'users': users});
+          if (user.loc) {
+            this.addMark(user.loc, user.name + ': ' + user.address_no + ' ' + user.address_name);
+          }
         }.bind(this));     
 
       }.bind(this), 100);
@@ -56,8 +53,7 @@ export default class Map extends React.Component {
   }
 
   addMark(loc, title) {
-    console.log('addMark', loc, title);
- 
+
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(loc.lat, loc.lon),
       title: title
@@ -68,8 +64,6 @@ export default class Map extends React.Component {
 
   render() {
     var users = this.state.users;
-    if (users==null)
-        return null;
 
     this.showMap()
 
@@ -77,7 +71,7 @@ export default class Map extends React.Component {
     for (var userId in users) {
       var user = users[userId];
       rows.push(
-        <tr key={userId}>
+        <tr key={user.key}>
           <td>{user.name}</td>
           <td>{user.phone}</td>
           <td>{user.adults}</td>
@@ -96,14 +90,18 @@ export default class Map extends React.Component {
         <div id="map-canvas" ref="map">zz</div>
 
         <table className="table">
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Adults</th>
-            <th>Children</th>
-            <th>Address</th>
-          </tr>
-          {rows}
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Adults</th>
+              <th>Children</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
         </table>
 
       </div>

@@ -13,7 +13,7 @@ export default class Register extends React.Component {
   }
 
   handleChange(field, event) {
-    this.state.user[field] = event.target.value.trim();
+    this.state.user[field] = event.target.value;
     this.setState({user: this.state.user});
   }
 
