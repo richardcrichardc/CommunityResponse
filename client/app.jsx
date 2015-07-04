@@ -65,7 +65,7 @@ class App extends React.Component {
         <div className="container">
           <div className="row content">
             <div className="col-md-12">
-                <RouteHandler user={user} userRef={userRef} things={things}/>
+                <RouteHandler userId={userId} user={user} userRef={userRef} things={things}/>
             </div>
           </div>
         </div>

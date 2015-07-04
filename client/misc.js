@@ -2,7 +2,7 @@
 
 /* Takes lat, long in WGS84 and gives us a distance in Kilometres */
 /* Latitidue is north/south, longitude is east/west */
-function geoDistance(point0, point1) {
+export function geoDistance(point0, point1) {
   /* function double:rad = dms2rads(deg:double, min:double, sec:double)
    *    return (deg + min / 60 + sec / 60^2) * PI / 180
    */
@@ -28,4 +28,12 @@ function geoDistance(point0, point1) {
   ) * 20000 / Math.PI;
 
   return distance;
+}
+
+export function friendlyDistance(distance) {
+  if (distance < 1) {
+    return (distance * 1000).toFixed(0) +'m';  
+  } else {
+    return distance.toFixed(1) +'km';
+  }
 }

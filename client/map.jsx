@@ -35,7 +35,6 @@ export default class Map extends React.Component {
         this.map = new google.maps.Map(this.mapNode, mapOptions);
 
         // Listen for new users and add when they arrive
-        this.usersRef.off();
         this.usersRef.on('child_added', function(snapshot) {
           var user = snapshot.val();
           user.key = snapshot.key();

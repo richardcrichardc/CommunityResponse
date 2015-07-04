@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, DefaultRoute, RouteHandler, Navigation, default as Router } from 'react-router';
-import { rooms, logs } from './base';
 
 export default class Needs extends React.Component {
 
