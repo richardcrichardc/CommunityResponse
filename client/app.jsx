@@ -52,7 +52,7 @@ class App extends React.Component {
           <div className="container">
             <div className="navbar-header">
               <a className="navbar-brand" href="#">
-                <span className="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Community Response
+                <span className="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {/*<img src="com_response.png"/>*/} Community Response
               </a>
             </div>
             <ul className="nav navbar-nav navbar-right">

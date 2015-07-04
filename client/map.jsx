@@ -44,6 +44,9 @@ export default class Map extends React.Component {
           this.setState({'users': users});
           if (user.loc) {
             this.addMark(user.loc, user.name + ': ' + user.address_no + ' ' + user.address_name);
+            
+            // Make noise
+            React.findDOMNode(this.refs.ping).play();
           }
         }.bind(this));     
 
@@ -85,8 +88,10 @@ export default class Map extends React.Component {
 
     return (
       <div>
-        <h3>Map</h3>
+        <h3>Management Console</h3>
 
+        <audio src="ping.mp3" autobuffer="autobuffer" ref="ping" />
+        
         <div id="map-canvas" ref="map">zz</div>
 
         <table className="table">
