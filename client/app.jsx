@@ -20,6 +20,14 @@ class App extends React.Component {
 
   }
 
+  handleLogout(event) {
+    event.preventDefault();
+    console.log('logout');
+    root.unauth();
+    location.reload();
+  }
+
+
   render() {
     var user = this.state.user;
     var userRef = this.state.userRef;
@@ -29,7 +37,7 @@ class App extends React.Component {
       return null;
 
     var username = user.name || 'stranger';
-    var logout = user.name ? <a href="#">Logout</a> : null;
+    var logout = user.name ? <a href="#" onClick={this.handleLogout}>Logout</a> : null;
 
     return (
       <div>
@@ -37,7 +45,7 @@ class App extends React.Component {
           <div className="container">
             <div className="navbar-header">
               <a className="navbar-brand" href="#">
-                Community Response (Don't Panic)
+                Community Response (Dont Panic)
               </a>
             </div>
             <ul className="nav navbar-nav navbar-right">
@@ -61,12 +69,14 @@ class App extends React.Component {
 
 import Home from './home.jsx';
 import Register from './register.jsx';
+import Needs from './needs.jsx';
 import Map from './map.jsx';
 
 var routes = (
   <Route handler={App}>
     <DefaultRoute name="home" handler={Home}/>
     <Route name="register" path="register" handler={Register}/>
+    <Route name="needs" path="needs" handler={Needs}/>
     <Route name="map" path="map" handler={Map}/>
   </Route>
 );

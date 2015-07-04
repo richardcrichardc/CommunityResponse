@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, DefaultRoute, RouteHandler, Navigation, default as Router } from 'react-router';
-import { rooms, logs } from './base';
+import { streets } from './base';
 
 export default class Register extends React.Component {
 
@@ -9,11 +9,11 @@ export default class Register extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {user: props.user};
+    this.state = {user: props.user, locNotFound: false};
   }
 
   handleChange(field, event) {
-    this.state.user[field] = event.target.value;
+    this.state.user[field] = event.target.value.trim();
     this.setState({user: this.state.user});
   }
 
@@ -25,12 +25,35 @@ export default class Register extends React.Component {
 
   submit(event) {
     event.preventDefault();
-    this.props.userRef.set(this.state.user);
+
+    var user = this.state.user;
+
+    console.log(this.state);
+    if (!user.address_no || !user.address_name) {
+      this.setState({locNotFound: true});
+      return;
+    }
+
+    
+    var key = user.address_no + '_' + user.address_name.substring(0, 6).toLowerCase();
+    console.log('key', key);
+    
+    streets.child(key).once('value', function(snapshot) {
+      var loc = snapshot.val();
+      if (loc) {
+        user.loc = loc;
+        this.props.userRef.set(user);
+        this.context.router.transitionTo('needs');
+      } else {
+        this.setState({locNotFound: true});
+      }
+    }.bind(this));
   }
 
   render() {
 
     var user = this.state.user;
+    var locNotFoundMsg = this.state.locNotFound ? 'Address not found' : '';
 
     return (
       <div>
@@ -91,6 +114,9 @@ export default class Register extends React.Component {
               <input type="text" className="form-control" placeholder="Name" value={user.address_name} onChange={this.handleChange.bind(this, 'address_name')}/>
             </div>
             <div className="col-xs-2">
+            </div>
+            <div className="col-xs-10">
+              <span className="help-block loc-found text-danger"><span className="text-danger">{locNotFoundMsg}</span></span>
             </div>
           </div>
         </form>

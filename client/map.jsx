@@ -26,10 +26,10 @@ export default class Map extends React.Component {
   }
 
   showMap() {
+    // add map if it has not been added yet
     if (this.map == null) {
       setTimeout(() => {
         this.mapNode = React.findDOMNode(this.refs.map);
-        console.log('hola', this.mapNode);
 
         var mapOptions = {
                   center: { lat: -39.927369, lng: 175.0414431},
@@ -37,12 +37,19 @@ export default class Map extends React.Component {
         };
         this.map = new google.maps.Map(this.mapNode, mapOptions);
 
+        // Add all user's to map
         for (var userId in this.state.users) {
           var user = this.state.users[userId];
           if (user.loc) {
             this.addMark(user.loc, user.name);
           }
         }
+
+        // Listen for new users and add when they arrive
+        this.usersRef.off();
+        this.usersRef.on('child_added', function(snapshot) {
+          console.log('hello', snapshot.val())
+        }.bind(this));     
 
       }.bind(this), 100);
     }
@@ -76,6 +83,7 @@ export default class Map extends React.Component {
           <td>{user.adults}</td>
           <td>{user.children}</td>
           <td>{user.address_no} {user.address_name}</td>
+          <td>{user.loc}</td>
         </tr>
       )
     }
