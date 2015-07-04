@@ -33,10 +33,15 @@ export default class Register extends React.Component {
       return;
     }
 
-    
-    var key = user.address_no + '_' + user.address_name.substring(0, 6).toLowerCase().trim().replace(' ','_');
+    var number = user.address_no.toLowerCase().replace(/[^0-9a-z]/ig, "");
+
+    var street = user.address_name.toLowerCase().trim().
+      replace(/ (road|street|drive|crescent|parade|pde|st|place|pl)$/i, "").
+      replace(/[^a-z ]+/ig, " ").replace(/ /g,"_").substring(0,6);
+
+    var key = number + "_" + street;
     console.log('key', key);
-    
+
     streets.child(key).once('value', function(snapshot) {
       var loc = snapshot.val();
       if (loc) {
