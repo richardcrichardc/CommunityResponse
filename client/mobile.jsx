@@ -40,7 +40,7 @@ export default class Mobile extends React.Component {
   			// Only show people within 3km
   			if (distance > 3) {
   				  console.log('dropped', distance, other);
-  					return;
+  					break;
   			}
 
   			others.push([other, distance]);
