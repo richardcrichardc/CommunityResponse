@@ -25,7 +25,10 @@ export default class Mobile extends React.Component {
   	var user = this.props.user;
   	var users = this.state.users;
   	var others = [];
+  	var otherElems = [];
 
+  	// Get list of other users and distances
+  	// Filter out self, and people too far away
   	for (var otherId in users) {
   			// Don't list yourself
   			if (userId == otherId)
@@ -34,6 +37,23 @@ export default class Mobile extends React.Component {
   			var other = users[otherId];
   			var distance = geoDistance(user.loc, other.loc);
   			
+  			// Only show people within 3km
+  			if (distance > 3) {
+  					return;
+  			}
+
+  			others.push([other, distance]);
+
+  	}
+
+  	// Sort others - closest first
+  	others.sort((a, b) => { return a[1] - b[1]; });
+
+  	for (var otherIndex in others) {
+
+  			var otherDistance = others[otherIndex];
+  			var other = otherDistance[0];
+  			var distance = otherDistance[1];
 
   			var haves = [];
   			for (var thingId in other.haves) {
@@ -79,7 +99,7 @@ export default class Mobile extends React.Component {
   			}
   			needs.pop();
 
-  			others.push(
+  			otherElems.push(
   				<div>
   					<div className="pull-right"><span className="badge">{ friendlyDistance(distance) }</span></div>
   					<h4>{other.name || 'anon'} <small>{other.phone}</small> </h4>
@@ -100,7 +120,7 @@ export default class Mobile extends React.Component {
       
       <h3>Nearby people</h3>
 
-      {others}
+      {otherElems}
 
     </div>;
   }
