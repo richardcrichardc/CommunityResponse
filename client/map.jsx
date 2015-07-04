@@ -108,16 +108,18 @@ export default class Map extends React.Component {
 
 
       userPane = (
-        <form className="form-horizontal">
+        <table className="selected-user">
           { row('Name', sel.name) }
           { row('Phone', sel.phone) }
           { row('Address', sel.address_no + ' ' + sel.address_name) }
-          { row('Adults', sel.adults) }
-          { row('Children', sel.children) }
+          { row('Adults', sel.adults || 0) }
+          { row('Children', sel.children || 0) }
           { row('Needs', needs) }
           { row('Haves', haves) }
-        </form>
+        </table>
         );
+    } else {
+      userPane = <div><i>No selection</i></div>;
     }
 
 
@@ -132,12 +134,13 @@ export default class Map extends React.Component {
             <audio src="ping.mp3" autobuffer="autobuffer" ref="ping" />
           </div>
           <div className="col-md-4">
+            <h3>Selected Person</h3>
             { userPane }
           </div>
 
         </div>
 
-        <div className="row">
+        <div className="row map-user-table">
           <div className="col-md-12">
             <table className="table">
               <thead>
@@ -165,10 +168,8 @@ export default class Map extends React.Component {
 
 function row(label, value) {
   return (
-   <div className="form-group">
-    <label className="col-sm-2 control-label">{label}</label>
-    <div className="col-sm-10">
-      <p className="form-control-static">{ value }</p>
-    </div>
-  </div>);
+    <tr>
+      <td className="sel-label"><b>{label}</b></td>
+      <td>{value}</td>
+    </tr>);
 }
