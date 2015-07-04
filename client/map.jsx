@@ -65,7 +65,7 @@ export default class Map extends React.Component {
     marker.setMap(this.map);
 
     google.maps.event.addListener(marker, 'click', () => {
-      this.setState({'sel', user});
+      this.setState({'sel': user});
     });
   }
 
@@ -92,8 +92,31 @@ export default class Map extends React.Component {
 
     var userPane = null;
     if (sel) {
+
+      var needs = [];
+      for (var thingId in sel.needs) {
+        var thing = this.props.things[thingId];
+        needs.push(<div>{thing}</div>);
+      }
+
+
+      var haves = [];
+      for (var thingId in sel.needs) {
+        var thing = this.props.things[thingId];
+        needs.push(<div>{thing}</div>);
+      }
+
+
       userPane = (
-        <div>{ sel.name }</div>
+        <form className="form-horizontal">
+          { row('Name', sel.name) }
+          { row('Phone', sel.phone) }
+          { row('Address', sel.address_no + ' ' + sel.address_name) }
+          { row('Adults', sel.adults) }
+          { row('Children', sel.children) }
+          { row('Needs', needs) }
+          { row('Haves', haves) }
+        </form>
         );
     }
 
@@ -119,7 +142,6 @@ export default class Map extends React.Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Created</th>
                   <th>Name</th>
                   <th>Phone</th>
                   <th>Adults</th>
@@ -141,3 +163,12 @@ export default class Map extends React.Component {
 
 }
 
+function row(label, value) {
+  return (
+   <div className="form-group">
+    <label className="col-sm-2 control-label">{label}</label>
+    <div className="col-sm-10">
+      <p className="form-control-static">{ value }</p>
+    </div>
+  </div>);
+}
