@@ -37,16 +37,22 @@ export default class Map extends React.Component {
         };
         this.map = new google.maps.Map(this.mapNode, mapOptions);
 
-
-        this.addMark(-39.927369, 175.0414431, 'Boo');
+        for (var userId in this.state.users) {
+          var user = this.state.users[userId];
+          if (user.loc) {
+            this.addMark(user.loc, user.name);
+          }
+        }
 
       }.bind(this), 100);
     }
   }
 
-  addMark(lat,lon, title) {
+  addMark(loc, title) {
+    console.log('addMark', loc, title);
+ 
     var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(lat, lon),
+      position: new google.maps.LatLng(loc.lat, loc.lon),
       title: title
     });
 
