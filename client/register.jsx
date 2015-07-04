@@ -36,7 +36,7 @@ export default class Register extends React.Component {
     var number = user.address_no.toLowerCase().replace(/[^0-9a-z]/ig, "");
 
     var street = user.address_name.toLowerCase().trim().
-      replace(/ (road|street|drive|crescent|parade|pde|st|place|pl)$/i, "").
+      replace(/ (road|street|drive|crescent|parade|pde|st|place|pl|ave|avenue)$/i, "").
       replace(/[^a-z ]+/ig, " ").replace(/ /g,"_").substring(0,6);
 
     var key = number + "_" + street;
