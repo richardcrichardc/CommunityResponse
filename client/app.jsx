@@ -28,7 +28,10 @@ class App extends React.Component {
     event.preventDefault();
     console.log('logout');
     root.unauth();
-    location.reload();
+    this.context.router.transitionTo('mobile');
+    setTimeout(() => {
+      window.location.reload();
+    }.bind(this), 500);
   }
 
 
@@ -41,8 +44,7 @@ class App extends React.Component {
     if (user == null)
       return null;
 
-    var username = user.name || 'stranger';
-    var logout = user.name ? <a href="#" onClick={this.handleLogout}>Logout</a> : null;
+    var logout = user.address_no ? <a href="#" onClick={this.handleLogout.bind(this)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a> : null;
 
     return (
       <div>
@@ -50,7 +52,7 @@ class App extends React.Component {
           <div className="container">
             <div className="navbar-header">
               <a className="navbar-brand" href="#">
-                Community Response (Don&apos;t Panic)
+                <span className="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Community Response
               </a>
             </div>
             <ul className="nav navbar-nav navbar-right">
@@ -71,6 +73,10 @@ class App extends React.Component {
     );
   }
 }
+
+App.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
 
 import Home from './home.jsx';
 import Mobile from './mobile.jsx';

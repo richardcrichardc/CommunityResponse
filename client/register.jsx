@@ -18,7 +18,7 @@ export default class Register extends React.Component {
   }
 
   back(event) {
-    this.context.router.transitionTo('home');
+    this.context.router.transitionTo('mobile');
   }
 
 

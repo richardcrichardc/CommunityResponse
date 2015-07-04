@@ -24,7 +24,7 @@ export default class Haves extends React.Component {
 
   submit(event) {
     this.props.userRef.set(this.state.user);
-    this.context.router.transitionTo('home');
+    this.context.router.transitionTo('mobile');
   }
 
   render() {
