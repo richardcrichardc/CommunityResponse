@@ -2,7 +2,7 @@ import "./style.less";
 
 import React from 'react';
 import { Route, DefaultRoute, RouteHandler, Link, default as Router } from 'react-router';
-import { root, users } from './base';
+import { root, users, things } from './base';
 
 var userId;
 
@@ -12,10 +12,14 @@ class App extends React.Component {
     super(props);
 
     var userRef = users.child(userId);
-    this.state = {user: null, userRef:userRef};
+    this.state = {user: null, userRef:userRef, things: {}};
 
     userRef.on("value", function(snapshot) {
       this.setState({'user': snapshot.val() || {}});
+    }.bind(this));
+
+    things.on("value", function(snapshot) {
+      this.setState({'things': snapshot.val() || {}});
     }.bind(this));
 
   }
@@ -31,6 +35,7 @@ class App extends React.Component {
   render() {
     var user = this.state.user;
     var userRef = this.state.userRef;
+    var things = this.state.things;
 
     // wait until user is loaded until rendering
     if (user == null)
@@ -58,7 +63,7 @@ class App extends React.Component {
         <div className="container">
           <div className="row content">
             <div className="col-md-12">
-                <RouteHandler user={user} userRef={userRef}/>
+                <RouteHandler user={user} userRef={userRef} things={things}/>
             </div>
           </div>
         </div>
