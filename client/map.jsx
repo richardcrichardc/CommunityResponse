@@ -8,6 +8,7 @@ export default class Map extends React.Component {
     super(props);
 
     this.mapNode = null;
+    this.map = null;
 
     this.state = {
       users: null
@@ -34,11 +35,22 @@ export default class Map extends React.Component {
                   center: { lat: -39.927369, lng: 175.0414431},
                   zoom: 14
         };
-        var map = new google.maps.Map(this.mapNode, mapOptions);
+        this.map = new google.maps.Map(this.mapNode, mapOptions);
 
+
+        this.addMark(-39.927369, 175.0414431, 'Boo');
 
       }.bind(this), 100);
     }
+  }
+
+  addMark(lat,lon, title) {
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lat, lon),
+      title: title
+    });
+
+    marker.setMap(this.map);
   }
 
   render() {
