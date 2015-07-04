@@ -19,15 +19,15 @@ require 'pp'
 #15 shape_Y
 
 whanganui = {}
-CSV.foreach("nz-street-address-electoral-WHANGANUI-ONLY.csv") do |row|
+CSV.foreach("../source/nz-street-address-electoral-WHANGANUI-ONLY.csv") do |row|
 
   if row[10] =~ /^Wanganui/ && #(row[8] =~ /^(anzac)/i) &&
     row[5] =~ /^[0-9a-z]+$/i &&
     row.first =~ /^POINT \(([^ ]+) ([^ ]+)\)/
-    data = { "lon" => $1.to_f, "lat" => $2.to_f }
+    data = { "lon" => $1.to_f, "lat" => $2.to_f, "address" => row[4] }
     num = row[5]
     street = row[8].
-      sub(/ (road|street|drive|crescent|parade|pde|st|place|pl)$/i, '').
+      sub(/ (road|street|drive|crescent|parade|pde|st|place|pl|ave|avenue)$/i, '').
       gsub(/[^a-z ]+/i, ' ').gsub(/ /,'_')
     key = num.downcase + "_" + street[0..5].downcase
     whanganui[key] = data
@@ -35,4 +35,7 @@ CSV.foreach("nz-street-address-electoral-WHANGANUI-ONLY.csv") do |row|
 #    exit 1
   end
 end
-File.open("geocode.json","w") { |f| f.puts(JSON.generate(whanganui, :indent => ' ', :object_nl => "\n")) }
+# fake address for demo
+whanganui['446b_anzac'] = whanganui['94_anzac']
+whanganui['446b_anzac']['address'] = whanganui['446b_anzac']['address'].sub(/^[0-9]+/, '446B')
+File.open("../output/geocode.json","w") { |f| f.puts(JSON.generate(whanganui, :indent => ' ', :object_nl => "\n")) }
