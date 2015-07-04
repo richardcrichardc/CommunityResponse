@@ -32,7 +32,7 @@ export default class Mobile extends React.Component {
   	for (var otherId in users) {
   			// Don't list yourself
   			if (userId == otherId)
-  				break;
+  				continue;
 
   			var other = users[otherId];
   			var distance = geoDistance(user.loc, other.loc);
@@ -40,7 +40,7 @@ export default class Mobile extends React.Component {
   			// Only show people within 3km
   			if (distance > 3) {
   				  console.log('dropped', distance, other);
-  					break;
+  					continue;
   			}
 
   			others.push([other, distance]);
@@ -104,9 +104,9 @@ export default class Mobile extends React.Component {
   			otherElems.push(
   				<div className={even ? 'even' : 'odd'}>
   					<div className="pull-right"><span className="badge">{ friendlyDistance(distance) }</span></div>
-  					<h4>{other.name || 'anon'} <small>Ph: {other.phone || '???'}</small> </h4>
-  					<div>Adults: {other.adults || 0 } Children:{other.children || 0 }</div>
-  					<div>{other.address_no} {other.address_name} ()</div>
+  					<h4>{other.name || 'anon'} <small>{other.phone || '???'}</small> </h4>
+  					<div>Adults: {other.adults || 0 } Children: {other.children || 0 }</div>
+  					<div>{other.loc.address}</div>
   					{ haves.length ? <div>Have: {haves}</div> : null }
   					{ needs.length ? <div>Need: {needs}</div> : null }
   				</div>
@@ -119,8 +119,8 @@ export default class Mobile extends React.Component {
       <div className="pull-right">
       	<Link to="register" className="btn btn-default btn-xs">Edit</Link>
       </div>
-      <h2>{user.name} <small>{user.phone}</small></h2>
-      <p>{user.address_no} {user.address_name}</p>
+      <h2>{user.name} <br/><small>{user.phone}</small></h2>
+      <p>{user.loc.address}</p>
       
       <h3>People nearby</h3>
 

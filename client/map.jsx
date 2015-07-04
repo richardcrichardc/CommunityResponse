@@ -59,7 +59,7 @@ export default class Map extends React.Component {
 
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(user.loc.lat, user.loc.lon),
-      title: user.name + ': ' + user.address_no + ' ' + user.address_name
+      title: user.name + ': ' + user.loc.address
     });
 
     marker.setMap(this.map);
@@ -83,7 +83,7 @@ export default class Map extends React.Component {
           <td>{user.phone}</td>
           <td>{user.adults}</td>
           <td>{user.children}</td>
-          <td>{user.address_no} {user.address_name}</td>
+          <td>{user.loc.address}</td>
           <td>{user.loc ? user.loc.lat : ''}</td>
           <td>{user.loc ? user.loc.lon : ''}</td>
         </tr>
@@ -111,11 +111,11 @@ export default class Map extends React.Component {
         <table className="selected-user">
           { row('Name', sel.name) }
           { row('Phone', sel.phone) }
-          { row('Address', sel.address_no + ' ' + sel.address_name) }
+          { row('Address', sel.loc.address) }
           { row('Adults', sel.adults || 0) }
           { row('Children', sel.children || 0) }
-          { row('Needs', needs) }
-          { row('Haves', haves) }
+          { row('Needs', needs.length ? needs : <i>Nothing needed</i>) }
+          { row('Haves', haves.length ? haves : <i>Nothing available</i>) }
         </table>
         );
     } else {
