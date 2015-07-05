@@ -1,7 +1,7 @@
 # Community Response
 
 <a href="https://hackerspace.govhack.org/content/community-response">Community Response</a> is 
-mobile web app and management console, developed over 48hrs for <a href="https://www.govhack.org/">GovtHack 2015</a></p>
+mobile web app and management console, developed over 48hrs for <a href="https://www.govhack.org/">GovtHack 2015</a>.
 
 ###How to build
 
