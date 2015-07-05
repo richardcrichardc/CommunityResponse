@@ -1,15 +1,15 @@
 {
-  "name": "projectx",
+  "name": "Community Response",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-server": "webpack-dev-server --content-base client/static --progress --inline --host 192.168.51.103 --port 8001",
+    "dev-server": "webpack-dev-server --content-base client/static --progress --inline --host 0.0.0.0 --port 8001",
     "release": "webpack -p"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "Richard Collins, Donald Gordon, Steven Johnson & Simon Kjellburg",
+  "license": "MIT",
   "dependencies": {
     "webpack": "~1.10.1",
     "webpack-dev-server": "~1.10.1",
