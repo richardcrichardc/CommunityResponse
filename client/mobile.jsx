@@ -27,6 +27,12 @@ export default class Mobile extends React.Component {
   	var others = [];
   	var otherElems = [];
 
+
+  	// Don't render if user has not been fully populated
+  	
+  	if (!user.loc)
+  		return null;
+
   	// Get list of other users and distances
   	// Filter out self, and people too far away
   	for (var otherId in users) {
